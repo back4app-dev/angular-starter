@@ -1,20 +1,19 @@
-# Stage 1: Builder
+# Stage 1
 FROM node:14.19.1-alpine AS builder
 
 WORKDIR /usr/src/app
 
 COPY package.json yarn.lock ./
 
-# Install dependencies using Yarn
-RUN yarn install --frozen-lockfile --non-interactive
+RUN apk add --no-cache yarn
 
-# Build the application
+RUN yarn install
+
 COPY . .
-RUN yarn build --prod
 
-# Stage 2: Production
-FROM nginx:1.21.3-alpine
+RUN yarn run build --prod
 
-# Copy built artifacts from the builder stage
+# Stage 2
+FROM nginx:1.15.8-alpine
+
 COPY --from=builder /usr/src/app/dist/angular-starter/ /usr/share/nginx/html
-
