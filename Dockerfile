@@ -8,16 +8,15 @@ COPY package.json yarn.lock ./
 
 RUN apk add --no-cache yarn
 
-# Fixed typo: "yarn install" should be "yarn install --frozen-lockfile"
 # Installing dependencies
 RUN yarn install --frozen-lockfile
 
 COPY . .
 
 # Building the application
-RUN yarn run build --prod
+RUN yarn run build --prod#
 
-# Stage 2
+ Stage 2
 FROM nginx:1.15.8-alpine
 
 # Copying the built application to Nginx's default HTML directory
