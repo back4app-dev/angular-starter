@@ -1,3 +1,4 @@
+
 # Stage 1
 FROM node:14.19.1-alpine AS builder
 
@@ -7,7 +8,8 @@ COPY package.json yarn.lock ./
 
 RUN apk add --no-cache yarn
 
-RUN yarn install
+# Fixed typo: "yarn install" should be "yarn install --frozenfile"
+-lockRUN yarn install --frozen-lockfile
 
 COPY . .
 
