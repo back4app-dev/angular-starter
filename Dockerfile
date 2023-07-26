@@ -19,8 +19,9 @@ COPY . .
 # Copy all files and directories from the current directory to the working directory
 
 # Building the application
-RUN yarn run build --prod
+RUN yarn build --prod
 # Build the Angular application using the production flag
+# Fixed typo: changed "yarn run build" to "yarn build"
 
 # Stage 2
 FROM nginx:1.15.8-alpine
@@ -29,4 +30,4 @@ FROM nginx:1.15.8-alpine
 # Copying the built application to Nginx's default HTML directory
 COPY --from=builder /usr/src/app/dist/angular-starter/ /usr/share/nginx/html
 # Copy the built Angular application from the builder stage to the Nginx HTML directory
-# This will serve the application through the Nginx web server
+# This will the serve application through the Nginx web server
